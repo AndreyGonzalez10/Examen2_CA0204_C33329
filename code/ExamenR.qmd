@@ -17,9 +17,9 @@ format:
 
 #Punto 1
 
-Cargar la base de datos:
+Cargar la base de datos y librerías
 
-```{r}
+```{r, message=FALSE}
 #Se cargan las librerías necesarias
 
 library(readr)
@@ -27,13 +27,19 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 
-#Se carga la base de datos
+#Se carga la base de datos corrigiendo las comas y eso de las columnas numéricas
 
-moras <- read_csv("data/moras.txt")
+moras <- read.csv("C:/Users/XPC/Desktop/Examen2_CA0204/data/moras.txt",
+                  stringsAsFactors = FALSE,
+                  header = TRUE)  
 
+#Limpieza de comas y demás de la columna salario
 
+moras$SALARIO <- gsub('"', '', moras$SALARIO)     
+moras$SALARIO <- gsub("[^0-9,]", "", moras$SALARIO)
+moras$SALARIO <- gsub(",", ".", moras$SALARIO)
+moras$SALARIO <- as.numeric(moras$SALARIO)
 
 
 ```
-
 
