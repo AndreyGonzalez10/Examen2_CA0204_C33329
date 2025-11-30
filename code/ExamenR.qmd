@@ -310,3 +310,7 @@ rpart.plot(tree)
 ```
 
 Básicamente el árbol dice como las personas que no sean asegurados voluntarios, asalariado, que tenga convenios de asegurado o pensionado, son mucho más proclives a ser morosos. Por otro lado en el segundo corte nos dice cómo los extranjeros también poseen más riesgo de ser morosos y por último nos relata que un salario menor a 304 mil colones también representa un alto riesgo de morosidad. Por lo que se pueden tomar decisiones en base a un árbol que es mucho más sencillo de analizar que varios gráficos, estas conclusiones se pueden corroborar con los gráficos obtenidos anteriormente. Para una persona de alto mando que no está acostumbrada a manejar data, le resulta factible un resumen de este estilo, corto, práctico y al grano. Por lo que si yo tuviera que tomar una decisión, para las personas que cumplan esas características no les prestaría recursos. 
+
+
+
+
