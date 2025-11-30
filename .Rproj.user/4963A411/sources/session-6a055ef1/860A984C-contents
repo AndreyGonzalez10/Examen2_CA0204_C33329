@@ -139,4 +139,82 @@ colSums(is.na(moras))
 
 ```
 
+#Punto 6 
+
+```{r, message=FALSE}
+
+#Para esto, será necesario hacer una función para graficar con for como en el examen pasado porque si no da navidad, entonces:
+
+
+graficar.categoricas <- function(df) {
+  
+  # Detecta columnas categóricas automáticamente
+  categoricas <- names(df)[sapply(df, function(x) is.character(x) || is.factor(x))]
+  
+  for (var in categoricas) {
+    # Agrupa y cuenta SOLO por la columna actual
+    resumen <- df %>%
+      group_by(.data[[var]]) %>%
+      summarise(cantidad = n(), .groups = "drop")
+    
+    print(resumen)  # muestra tabla resumen
+    
+    # Gráfico de barras
+    p <- ggplot(resumen, aes(x = .data[[var]], y = cantidad, fill = .data[[var]])) +
+      geom_bar(stat = "identity") +
+      labs(title = paste("Distribución de", var),
+           x = var,
+           y = "Cantidad") +
+      theme_minimal() +
+      theme(legend.position = "none")
+    
+    print(p)  # muestra gráfico
+  }
+}
+
+graficar.categoricas(moras)
+
+```
+#Punto 7
+
+```{r, message=FALSE}
+
+#Para esto igual hay que recurrir a un for
+
+graficar.morosos <- function(df, indicador = "INDICADOR_MOROSO") {
+  
+  categoricas <- names(df)[sapply(df, function(x) is.character(x) || is.factor(x))]
+  
+  for (var in categoricas) {
+    resumen <- df %>%
+      group_by(.data[[var]]) %>%
+      summarise(
+        total = n(),
+        morosos = sum(.data[[indicador]] == 1, na.rm = TRUE),
+        porcentaje_morosos = (morosos / total) * 100,
+        .groups = "drop"
+      ) %>%
+      arrange(desc(porcentaje_morosos))
+    
+    print(resumen)  # muestra tabla resumen
+    
+    # Gráfico de barras con porcentaje de morosos
+    p <- ggplot(resumen, aes(x = reorder(.data[[var]], -porcentaje_morosos),
+                             y = porcentaje_morosos,
+                             fill = .data[[var]])) +
+      geom_bar(stat = "identity") +
+      labs(title = paste("Porcentaje de morosos por", var),
+           x = var,
+           y = "% Morosos") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1),
+            legend.position = "none")
+    
+    print(p)  # muestra gráfico
+  }
+}
+
+graficar.morosos(moras)
+
+```
 
