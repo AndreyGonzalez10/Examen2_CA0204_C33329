@@ -1,0 +1,39 @@
+---
+title: "Examen 2 Herramientas de Ciencia de Datos I"
+author: 
+  - name: "Andrey González Bastos C33329"
+  
+date: "`r Sys.Date()`"  
+
+format:
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    df-print: paged
+    theme: cosmo
+    highlight: tango
+---
+
+#Punto 1
+
+Cargar la base de datos:
+
+```{r}
+#Se cargan las librerías necesarias
+
+library(readr)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+
+#Se carga la base de datos
+
+moras <- read_csv("data/moras.txt")
+
+
+
+
+```
+
+
