@@ -99,3 +99,21 @@ moras %>% head(5)
 
 ```
 
+#Punto 4
+
+```{r}
+
+#Para este punto también se opta por hacer una función
+
+porcentaje.na <- function(vector) {
+  total = length(vector)
+  nas = sum(is.na(vector))
+  return((nas / total) * 100)
+}
+
+#Con sapply recorremos todo sin usar for ni varas raras
+
+sapply(moras, porcentaje.na)
+
+```
+
