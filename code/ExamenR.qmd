@@ -247,4 +247,57 @@ graficar.moroso.numericas(moras)
 
 ```
 
+#Punto 9 
 
+No pide nada en particular, es solo la instrucción de hacer lo que acabamos de hacer en R con commits. 
+
+#Punto 10
+
+Se busca encontrar las variables que más se relacionan con que la persona sea morosa o no, esto con la herramienta de un árbol de decisión por su interpretabilidad.
+
+
+```{r, message=FALSE}
+
+
+library(rpart)
+library(rpart.plot)
+
+
+#Se quitan identificadores únicos y se limpia la data de nombres largos
+df.modelar <- moras %>% select(-IDENTIFICACION)
+
+df.modelar <- df.modelar %>%
+  mutate(
+    TIPO_ASEGURAMIENTO = case_when(
+      grepl("ASALARIADO", TIPO_ASEGURAMIENTO) ~ "ASALARIADO",
+      
+      grepl("TRABAJADOR INDEPENDIENTE", TIPO_ASEGURAMIENTO) ~ "INDEPENDIENTE",
+      
+      grepl("PENSIONADOS EN SU PROPIO SISTMEA", TIPO_ASEGURAMIENTO) ~ "P.S.P.S",
+      
+      grepl("ASEGURADO VOLUNTARIO", TIPO_ASEGURAMIENTO) ~ "A. VOLUNTARIO",
+      
+      grepl(
+        "CONVENIOS ESPECIALES DE TRABAJADORES INDEPENDIENTES",
+        TIPO_ASEGURAMIENTO
+      ) ~ "C.E.T.I",
+      
+      grepl(
+        "CONVENIOS ESPECIALES DE ASEGURADOS VOLUNTARIOS",
+        TIPO_ASEGURAMIENTO
+      ) ~ "C.E.A.V",
+      
+      TRUE ~ "OTROS"
+    )
+  )
+
+#Se hace el árbol
+
+tree <- rpart(INDICADOR_MOROSO ~ ., data = df.modelar)
+rpart.plot(tree)
+
+
+
+```
+
+Básicamente el árbol dice como las personas que no sean asegurados voluntarios, asalariado, que tenga convenios de asegurado o pensionado, son mucho más proclives a ser morosos. Por otro lado en el segundo corte nos dice cómo los extranjeros también poseen más riesgo de ser morosos y por último nos relata que un salario menor a 304 mil colones también representa un alto riesgo de morosidad. Por lo que se pueden tomar decisiones en base a un árbol que es mucho más sencillo de analizar que varios gráficos, estas conclusiones se pueden corroborar con los gráficos obtenidos anteriormente. Para una persona de alto mando que no está acostumbrada a manejar data, le resulta factible un resumen de este estilo, corto, práctico y al grano. Por lo que si yo tuviera que tomar una decisión, para las personas que cumplan esas características no les prestaría recursos. 
