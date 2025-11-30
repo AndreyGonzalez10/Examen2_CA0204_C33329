@@ -54,3 +54,48 @@ summary(moras$EDAD)
 
 ```
 
+#Punto 3
+
+```{r, message=FALSE}
+
+#Se crea una función para hacer ese cálculo más rápido para todas las entradas del vector 
+
+z.scores.funcion <- function(vector){
+  media = mean(vector, na.rm = TRUE)
+  sd = sd(vector, na.rm = TRUE)
+  z.score = (vector -media)/sd 
+  return(z.score)
+
+}
+
+#Se le hacen las nuevas columnas al moras original  
+moras <- moras %>% mutate(
+z.score.salario = z.scores.funcion(moras$SALARIO),
+z.score.edad = z.scores.funcion(moras$EDAD)
+)
+
+#Se comprueba que todo salió bien con un head
+
+moras %>% head(5)
+
+
+#Se hace la función para verificar rangos de z.score según la instrucción del 1.96
+
+clasificadora.de.atipicos <- function(vector){
+  resultado = ifelse(abs(vector)>1.96, "Atípico", "Normal")
+  return(resultado)
+}
+
+#Se actualiza el dataframe
+
+moras <- moras %>% mutate(
+rango.z.salario = clasificadora.de.atipicos(z.score.salario),
+rango.z.edad = clasificadora.de.atipicos(z.score.edad)
+)
+
+#Se hace un head pequeño para comprobar que todo salió bien
+
+moras %>% head(5)
+
+```
+
