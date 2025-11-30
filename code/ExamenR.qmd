@@ -190,17 +190,16 @@ graficar.morosos <- function(df, indicador = "INDICADOR_MOROSO") {
       group_by(.data[[var]]) %>%
       summarise(
         total = n(),
-        morosos = sum(.data[[indicador]] == 1, na.rm = TRUE),
-        porcentaje_morosos = (morosos / total) * 100,
+        morosos = sum(.data[[indicador]] %in% c("SI"), na.rm = TRUE),
+        porcentaje.morosos = (morosos / total) * 100,
         .groups = "drop"
       ) %>%
-      arrange(desc(porcentaje_morosos))
+      arrange(desc(porcentaje.morosos))
+      print(resumen)  
     
-    print(resumen)  # muestra tabla resumen
     
-    # Gráfico de barras con porcentaje de morosos
-    p <- ggplot(resumen, aes(x = reorder(.data[[var]], -porcentaje_morosos),
-                             y = porcentaje_morosos,
+    p <- ggplot(resumen, aes(x = reorder(.data[[var]], -porcentaje.morosos),
+                             y = porcentaje.morosos,
                              fill = .data[[var]])) +
       geom_bar(stat = "identity") +
       labs(title = paste("Porcentaje de morosos por", var),
@@ -217,4 +216,35 @@ graficar.morosos <- function(df, indicador = "INDICADOR_MOROSO") {
 graficar.morosos(moras)
 
 ```
+#Punto 8
+
+```{r, message=FALSE}
+
+#Acá nuevamente se recurre a un for para recorrer todas las columnas numéricas (edad y salario)
+
+
+graficar.moroso.numericas <- function(df, vars = c("EDAD", "SALARIO"), indicador = "INDICADOR_MOROSO") {
+  
+  for (var in vars) {
+    p <- ggplot(df, aes(
+      x = .data[[var]],
+      fill = factor(.data[[indicador]], levels = c("NO", "SI"))
+    )) +
+      geom_histogram(position = "identity", alpha = 0.6, bins = 30) +
+      labs(
+        title = paste("Distribución de", var, "según morosidad"),
+        x = var,
+        y = "Cantidad",
+        fill = "Moroso"
+      ) +
+      theme_minimal()
+    
+    print(p)
+  }
+}
+
+graficar.moroso.numericas(moras)
+
+```
+
 
