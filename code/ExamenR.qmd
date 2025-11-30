@@ -42,4 +42,15 @@ moras$SALARIO <- as.numeric(moras$SALARIO)
 
 
 ```
+#Punto 2
+
+Resumen de los cinco números
+
+```{r}
+
+summary(moras$SALARIO)
+summary(moras$EDAD)
+
+
+```
 
