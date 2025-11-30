@@ -175,6 +175,11 @@ graficar.categoricas <- function(df) {
 graficar.categoricas(moras)
 
 ```
+Este punto ayuda a ver como se distribuyen los datos de la columnas por las diferentes categorías que tienen,esto ayuda a hacerse una idea de donde se está trabajando y a cuales variables les debemos poner más atención en posteriores análisis. Por ejemplo hay mucho más sector privado, casi toda la data está activa, hay minoría de morosos, minoría de extranjeros y los tipos de aseguramiento están más repartidos. 
+
+
+
+
 #Punto 7
 
 ```{r, message=FALSE}
@@ -216,6 +221,9 @@ graficar.morosos <- function(df, indicador = "INDICADOR_MOROSO") {
 graficar.morosos(moras)
 
 ```
+
+Con los gráficos anteriores podemos deducir las características de las personas morosas, por ejemplo los extranjeros tienden a ser más morosos, también aquellos que no están activos siguen esa tendencia de morosidad. También podemos notar como el sector privado tiende a ser más moroso que el sector público. Los hombres son levemente más morosos que las mujeres y los trabajadores independientes son aquellos que más morosidad presentan. Esto se puede deber a que al no tener un ingreso fijo a veces no pueden cancelar sus deudas cuando no tuvieron ingresos y eso los coloca en esa categoría de morosos, esto va fuertemente ligado a los no activos, pues al no tener trabajo no generan ingresos para cancelar sus obligaciones. Los extranjeros y las mujeres se peude deber a temas culturales y sociológicos. 
+
 #Punto 8
 
 ```{r, message=FALSE}
@@ -246,6 +254,9 @@ graficar.moroso.numericas <- function(df, vars = c("EDAD", "SALARIO"), indicador
 graficar.moroso.numericas(moras)
 
 ```
+Con los gráficos anteriores podemos notar varias cosas. Primero podemos ver como los salarios se juntan mucho en un mismo intervalo, por lo que se puede concluir que en la data, las personas ganan muy parecido, hay pocas personas ganando más que esa media y los altos salarios no presentan morosidad. Por otro lado con la edad podemos ver la mayoría de las personas no están morosos y quienes más lo están están en un rango de 30 a 60 años aproximadamente, los adultos mayores y los menores de 25 presentan bajo endeudamiento. 
+
+
 
 #Punto 9 
 
