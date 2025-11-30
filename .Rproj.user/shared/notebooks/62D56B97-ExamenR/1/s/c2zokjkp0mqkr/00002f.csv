@@ -1,40 +1,21 @@
-"0","# Paso 1: Leer el archivo como texto plano
-moras <- read.csv(""C:/Users/XPC/Desktop/Examen2_CA0204/data/moras.txt"",
-                  stringsAsFactors = FALSE,
-                  header = TRUE)  # Asegúrate de que tenga encabezado
-
-# Paso 2: Detectar y limpiar comillas, espacios y símbolos
-moras$SALARIO <- gsub('""', '', moras$SALARIO)         # quita comillas
-moras$SALARIO <- gsub(""[^0-9,]"", """", moras$SALARIO)   # deja solo dígitos y coma
-
-# Paso 3: Reemplazar coma decimal por punto
-moras$SALARIO <- gsub("","", ""."", moras$SALARIO)
-
-# Paso 4: Convertir a numérico
-moras$SALARIO <- as.numeric(moras$SALARIO)
-
-# Paso 5: Verificar
-summary(moras$SALARIO)
-"
-"1","    Min. "
-"1"," 1st Qu. "
-"1","  Median "
-"1","    Mean "
-"1"," 3rd Qu. "
-"1","
-"
-"1","      10 "
-"1","  297429 "
-"1","  408495 "
-"1","  657534 "
-"1","  700000 "
-"1","
-"
-"1","    Max. "
-"1","    NA's "
-"1","
-"
-"1","16858742 "
-"1","       3 "
-"1","
-"
+"0","#Se cargan las librerías necesarias"
+"0",""
+"0","library(readr)"
+"0","library(readxl)"
+"0","library(dplyr)"
+"0","library(ggplot2)"
+"0",""
+"0","#Se carga la base de datos corrigiendo las comas y eso de las columnas numéricas"
+"0",""
+"0","moras <- read.csv(""C:/Users/XPC/Desktop/Examen2_CA0204/data/moras.txt"","
+"0","                  stringsAsFactors = FALSE,"
+"0","                  header = TRUE)  "
+"0",""
+"0","#Limpieza de comas y demás de la columna salario"
+"0",""
+"0","moras$SALARIO <- gsub('""', '', moras$SALARIO)     "
+"0","moras$SALARIO <- gsub(""[^0-9,]"", """", moras$SALARIO)"
+"0","moras$SALARIO <- gsub("","", ""."", moras$SALARIO)"
+"0","moras$SALARIO <- as.numeric(moras$SALARIO)"
+"0",""
+"0",""
